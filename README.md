@@ -21,6 +21,8 @@ User Registration:
 Implement Firebase email/password registration for new users.
 User Login:
 
+Implement a background service to trigger a daily reminder, currently set to repeat every 5 minutes for testing purposes.
+
 After registration, allow users to log in using their credentials.
 Add Expense Feature:
 
