@@ -13,42 +13,46 @@ import '../../../custom_widgets/custom_tab_bar.dart';
 import '../../utils/common_style.dart';
 
 
-class NewsHomeScreen extends StatefulWidget {
+class ExpenseSummaryScreen extends StatefulWidget {
   final String? appBar;
-  const NewsHomeScreen({super.key,this.appBar});
+  const ExpenseSummaryScreen({super.key,this.appBar});
 
   @override
-  State<NewsHomeScreen> createState() => _NewsHomeScreenState();
+  State<ExpenseSummaryScreen> createState() => _ExpenseSummaryScreenState();
 }
 
-class _NewsHomeScreenState extends State<NewsHomeScreen>
+class _ExpenseSummaryScreenState extends State<ExpenseSummaryScreen>
     with SingleTickerProviderStateMixin {
   var rng = Random();
   late ExpenseProvider provider ;
+  int initPosition = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    provider = Provider.of<ExpenseProvider>(context, listen: false);
-    provider.clearAll();
-    provider.getExpenses();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider = Provider.of<ExpenseProvider>(context, listen: false);
+      provider.clearAll();
+      initPosition == 0 ? provider.getExpensesWeekly(): provider.getExpensesMonthly();
+    });
   }
 
 
 
-  int initPosition = 0;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseProvider>(
       builder: (context, provider, Widget? child) {
+        List<String> tabTitle = ['Weekly'.tr,'Monthly'.tr];
         return Scaffold(
           backgroundColor: AppColor.white,
           appBar: CustomAppBar(title: "Summary".tr,),
           body: CustomTabView(
             initPosition: initPosition,
-            itemCount: provider.tabTitle.length,
+            itemCount: tabTitle.length,
             tabBuilder: (context, index) {
-              return Tab(text: provider.tabTitle[index]);
+              return Tab(text: tabTitle[index]);
             },
             pageBuilder: (context, index){
               return SingleChildScrollView(
@@ -117,7 +121,7 @@ class _NewsHomeScreenState extends State<NewsHomeScreen>
             },
             onPositionChange: (index) {
               initPosition = index;
-             index == 0 ? provider.getExpensesWeekly(): provider.getExpensesWeekly();
+             index == 0 ? provider.getExpensesWeekly(): provider.getExpensesMonthly();
               print('initPosition------ $initPosition');
             },
             onScroll: (position) {

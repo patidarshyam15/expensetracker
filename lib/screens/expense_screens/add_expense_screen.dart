@@ -87,8 +87,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                     Icons.arrow_drop_down_rounded,
                                     color: AppColor.black,
                                   ),
-                                  hintText: 'Business Start Date'.tr,
-                                  labelText: 'Business Start Date'.tr,
+                                  hintText: 'Select Date'.tr,
+                                  labelText: 'Select Date'.tr,
                                 ),
                                 SizedBox(
                                   height: 10.sp,

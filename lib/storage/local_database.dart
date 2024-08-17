@@ -130,6 +130,13 @@ class DatabaseHelper {
     return await db!.query(tableExpense, where: '$columnDate = ?', whereArgs: [selectedDate],orderBy: "$columnId DESC");
   }
 
+  Future<List<Map<String, dynamic>>> getExpensesBetweenDate(today,lastDate) async {
+    Database? db = await instance.database;
+    // return await db!.query(tableExpense, where: '$columnDate = ?', whereArgs: [selectedDate],orderBy: "$columnId DESC");
+    return await db!.rawQuery("SELECT * FROM $tableExpense where $columnDate between '$lastDate' and '$today'");
+  }
+
+
   // updateInvoiceItems(Map<String, dynamic> row) async {
   //   Database? db = await instance.database;
   //   int invoices_id = row["invoices_id"];

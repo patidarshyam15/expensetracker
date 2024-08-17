@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import '../../constants/color_const.dart';
 import '../../utils/common_style.dart';
 import '../expense_screens/expense_list_screen.dart';
+import '../expense_screens/expense_summary.dart';
 import '../settings_screen/settings_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -38,12 +39,12 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: <Widget>[
+        children: const <Widget>[
           Center(
             child: ExpenseListScreen(),
           ),
           Center(
-            child: Container(),
+            child: ExpenseSummaryScreen(),
           ),
           Center(
             child: SettingsScreen(),
@@ -51,21 +52,13 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         ],
       ),
       bottomNavigationBar: Container(
-        // height: 45.sp,
-        // color: AppColor.red,
-        // height: kBottomNavigationBarHeight,
         child: BottomNavigationBar(
           iconSize: 20.sp,
           elevation: 24,
           type: BottomNavigationBarType.fixed,
-          // backgroundColor: Colors.transparent,
           currentIndex: _selectedIndex,
           selectedFontSize: 13,
           selectedItemColor: AppColor.primary,
-          // selectedIconTheme: IconThemeData(
-          //   color: AppColor.red,
-          //   // fill: .1
-          // ),
           unselectedFontSize: 10.sp,
           unselectedItemColor: AppColor.black.withAlpha(170),
           unselectedLabelStyle: CommonStyle.black12Normal(),
@@ -105,4 +98,3 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     );
   }
 }
-

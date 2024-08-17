@@ -18,10 +18,11 @@ import '../storage/local_database.dart';
 
 
 class ExpenseProvider extends ChangeNotifier with CommonValidations {
+  DateTime todayDate = DateTime.now();
   AppStorage appStorage = AppStorage();
   bool _loading = true;
   bool get loading => _loading;
-  List<String> tabTitle = ['Weekly'.tr,'Monthly'.tr];
+
   setLoading(val){
     _loading = val;
     notifyListeners();
@@ -144,10 +145,18 @@ class ExpenseProvider extends ChangeNotifier with CommonValidations {
     notifyListeners();
   }
 
+
+  
   void getExpensesWeekly() async {
+    var dateNow = Format.datePass.format(todayDate);
+    var dateLastWeek = Format.datePass.format(todayDate.subtract(const Duration(days: 7)));
+    print("${dateNow}   ${dateLastWeek}");
+
+    // var now_1m = new DateTime(now.year, now.month-1, now.day);
+    // var now_1y = new DateTime(now.year-1, now.month, now.day);
     setLoading(true);
     final allRows =
-    await dbHelper.getExpensesByDate(_searchCtrl.text);
+    await dbHelper.getExpensesBetweenDate(dateNow,dateLastWeek);
     log('query all rows:\n');
     allRows.forEach(print);
     // print(json.encode(allRows));
@@ -158,9 +167,13 @@ class ExpenseProvider extends ChangeNotifier with CommonValidations {
   }
 
   void getExpensesMonthly() async {
+    var dateNow = Format.datePass.format(todayDate);
+    var dateLastMonth= Format.datePass.format(DateTime(todayDate.year, todayDate.month-1, todayDate.day));
+    print("${dateNow}   ${dateLastMonth}");
+
     setLoading(true);
     final allRows =
-    await dbHelper.getExpensesByDate(_searchCtrl.text);
+    await dbHelper.getExpensesBetweenDate(dateNow,dateLastMonth);
     log('query all rows:\n');
     allRows.forEach(print);
     // print(json.encode(allRows));
